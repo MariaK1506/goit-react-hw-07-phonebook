@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import { Item, Name, Number, Button } from './ContactItem.styled';
+import { useDeleteContactMutation } from 'redux/services';
 
-export const ContactItem = ({ contact, onDeleteContact }) => {
-  const { id, name, number } = contact;
+export const ContactItem = ({ contact }) => {
+  const { id, name, phone } = contact;
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+
   return (
     <Item key={id}>
       <Name>{name}:</Name>
-      <Number>{number}</Number>
-      <Button onClick={() => onDeleteContact(id)}>Delete</Button>
+      <Number>{phone}</Number>
+      <Button onClick={() => deleteContact(id)} disabled={isDeleting}>
+        {isDeleting ? 'Deleting...' : 'Delete'}
+      </Button>
     </Item>
   );
 };
@@ -16,7 +21,6 @@ ContactItem.propTypes = {
   contact: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
   }),
-  onDeleteContact: PropTypes.func.isRequired,
 };
