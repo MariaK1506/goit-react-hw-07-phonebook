@@ -26,7 +26,7 @@ export default function App() {
           <Section title="Contacts">
             <Container>
               <Filter />
-              {contacts && <ContactsList contacts={contacts} />}
+              {contacts && <ContactsList />}
             </Container>
           </Section>
         </>
